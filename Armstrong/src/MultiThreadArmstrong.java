@@ -4,9 +4,14 @@ import java.util.List;
 public class MultiThreadArmstrong implements Runnable {
 	int start;
 	int finish;
+	List<Integer> numList;
 	public MultiThreadArmstrong(int s,int f) {
 		this.start = s;
 		this.finish = f;
+	}
+	public MultiThreadArmstrong(List<Integer> numList) {
+		this.numList = numList;	
+		
 	}
 	public void run() {
 		//System.out.println("Thread " + 
@@ -14,19 +19,23 @@ public class MultiThreadArmstrong implements Runnable {
         //        " is running");
 		try {
 			List<Integer> outList = new ArrayList<Integer>();
-			for (int i = start; i <= finish; i++) {
-				int outNum = 0;
-				int tempNum = i;
+			//for (int i = start; i <= finish; i++) {
+			for(int num :numList) {
+				long outNum = 0;
+				int tempNum = num;
 				while (tempNum > 0) {
-					outNum = (int) (outNum + Math.pow((tempNum % 10), String.valueOf(i).length()));
+					outNum = (int) (outNum + Math.pow((tempNum % 10), String.valueOf(num).length()));
 					tempNum = tempNum / 10;
+					if(outNum>num||outNum>0) {
+						break;
+					}
 					// System.out.println(String.valueOf(i).length());
 
 				}
 				// System.out.println(outNum);
-				if (outNum == i) {
+				if (outNum == num) {
 
-					Armstrong.outList1.add(i);
+					Armstrong.outList1.add(num);
 					//System.out.println(i);
 				}
 
